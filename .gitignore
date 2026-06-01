@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[oc]
+.venv/
+build/
+dist/
+*.egg-info/
+
+# Local annotation results
+results/
+*_preferences.json
+
+# Private/regeneration artifacts
+*.before_*.csv
+final_preference_corpus_dropped_rows.csv
+forced_drop_sample_ids.txt
+DATA_QUALITY_REPORT.md
+.openrouter_key
+*.log

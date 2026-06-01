@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preference Annotation</title>
+    <link rel="stylesheet" href="/vendor/katex.min.css" />
+    <link rel="stylesheet" href="/vendor/highlight-github.min.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Preference annotation</p>
+        <h1>Choose the better response</h1>
+      </div>
+      <div class="run-meta">
+        <span id="annotatorBadge">Annotator</span>
+        <span id="saveState">Loading...</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar" aria-label="Annotation progress">
+        <div class="progress-card">
+          <div class="progress-head">
+            <span id="progressText">0 / 0</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </div>
+
+        <div class="jump-row">
+          <button id="previousButton" class="icon-button" title="Previous row" type="button">←</button>
+          <select id="rowSelect" aria-label="Jump to row"></select>
+          <button id="nextButton" class="icon-button" title="Next row" type="button">→</button>
+        </div>
+
+        <button id="nextUnansweredButton" class="secondary-button" type="button">Next unanswered</button>
+
+        <div class="legend">
+          <span><kbd>1</kbd> strong A</span>
+          <span><kbd>3</kbd> tie</span>
+          <span><kbd>5</kbd> strong B</span>
+        </div>
+
+        <div id="donePanel" class="done-panel" hidden>
+          <strong>All assigned rows are annotated.</strong>
+          <p id="outputPath"></p>
+          <a class="download-link" href="/api/export">Download JSON</a>
+        </div>
+      </aside>
+
+      <section class="workspace" aria-live="polite">
+        <div class="sample-head">
+          <div>
+            <p id="sampleMeta" class="sample-meta">Row</p>
+            <h2 id="sampleTitle">Loading...</h2>
+          </div>
+          <span id="answeredBadge" class="answered-badge">Unanswered</span>
+        </div>
+
+        <section class="source-panel" aria-labelledby="sourceHeading">
+          <h3 id="sourceHeading">Source</h3>
+          <div id="sourceText" class="rendered"></div>
+        </section>
+
+        <section class="responses" aria-label="Responses to compare">
+          <article class="response-panel">
+            <div class="panel-label">Response A</div>
+            <div id="responseA" class="rendered"></div>
+          </article>
+          <article class="response-panel">
+            <div class="panel-label">Response B</div>
+            <div id="responseB" class="rendered"></div>
+          </article>
+        </section>
+
+        <section class="rating-panel" aria-label="Preference rating">
+          <div class="rating-grid" id="ratingGrid"></div>
+          <label class="notes-label" for="notesInput">Notes</label>
+          <textarea id="notesInput" rows="3" placeholder="Optional notes for this comparison"></textarea>
+        </section>
+      </section>
+    </main>
+
+    <script src="/vendor/marked.min.js"></script>
+    <script src="/vendor/purify.min.js"></script>
+    <script src="/vendor/katex.min.js"></script>
+    <script src="/vendor/auto-render.min.js"></script>
+    <script src="/vendor/highlight.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

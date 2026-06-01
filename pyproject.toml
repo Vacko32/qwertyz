@@ -1,0 +1,6 @@
+[project]
+name = "preference-annotation-public"
+version = "0.1.0"
+description = "Local preference annotation website"
+requires-python = ">=3.13"
+dependencies = []
