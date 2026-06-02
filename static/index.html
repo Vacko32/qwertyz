@@ -6,7 +6,7 @@
     <title>Preference Annotation</title>
     <link rel="stylesheet" href="/vendor/katex.min.css" />
     <link rel="stylesheet" href="/vendor/highlight-github.min.css" />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/styles.css?v=compare-3" />
   </head>
   <body>
     <header class="topbar">
@@ -62,18 +62,17 @@
           <span id="answeredBadge" class="answered-badge">Unanswered</span>
         </div>
 
-        <section class="source-panel" aria-labelledby="sourceHeading">
-          <h3 id="sourceHeading">Source</h3>
-          <div id="sourceText" class="rendered"></div>
-        </section>
-
-        <section class="responses" aria-label="Responses to compare">
-          <article class="response-panel">
-            <div class="panel-label">Response A</div>
+        <section class="comparison-grid" aria-label="English source and translated responses">
+          <article class="compare-panel source-panel" aria-labelledby="sourceHeading">
+            <div id="sourceHeading" class="panel-label">English</div>
+            <div id="sourceText" class="rendered"></div>
+          </article>
+          <article class="compare-panel response-panel">
+            <div class="panel-label">Translation A</div>
             <div id="responseA" class="rendered"></div>
           </article>
-          <article class="response-panel">
-            <div class="panel-label">Response B</div>
+          <article class="compare-panel response-panel">
+            <div class="panel-label">Translation B</div>
             <div id="responseB" class="rendered"></div>
           </article>
         </section>
