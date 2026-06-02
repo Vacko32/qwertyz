@@ -11,6 +11,7 @@
   --focus: #2267b8;
   --danger: #a33b32;
   --shadow: 0 10px 28px rgba(22, 29, 37, 0.08);
+  --page-max: 2200px;
 }
 
 * {
@@ -104,9 +105,9 @@ h3 {
   display: grid;
   grid-template-columns: 270px minmax(0, 1fr);
   gap: 22px;
-  width: min(1480px, 100%);
+  width: min(var(--page-max), 100%);
   margin: 0 auto;
-  padding: 22px 28px 34px;
+  padding: 22px 20px 34px;
 }
 
 .sidebar {
