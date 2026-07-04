@@ -5,6 +5,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from http import HTTPStatus
@@ -17,7 +18,9 @@ from urllib.parse import urlparse
 APP_DIR = Path(__file__).resolve().parent
 STATIC_DIR = APP_DIR / "static"
 DEFAULT_DATA_CSV = APP_DIR / "final.csv"
+DEFAULT_PART2_DATA_CSV = APP_DIR / "final_part2.csv"
 DEFAULT_RESULTS_DIR = APP_DIR / "results"
+DEFAULT_PART2_RESULTS_DIR = APP_DIR / "results_part2"
 
 SCALE = {
     1: "strong preference for Response A",
@@ -111,12 +114,13 @@ class AnnotationState:
         } | {
             row["model_b_model_id"] for row in self.rows
         }
-        expected_slots = {f"model_{i}" for i in range(1, 6)}
-        unknown_slots = referenced_slots - expected_slots
-        if unknown_slots:
+        invalid_slots = {
+            slot for slot in referenced_slots if not re.fullmatch(r"model_[1-9][0-9]*", slot)
+        }
+        if invalid_slots:
             raise ValueError(
-                f"{self.data_csv} references unknown model slots: "
-                f"{', '.join(sorted(unknown_slots))}"
+                f"{self.data_csv} references non-anonymous model slots: "
+                f"{', '.join(sorted(invalid_slots))}"
             )
 
     def _load_existing(self) -> None:
@@ -147,6 +151,10 @@ class AnnotationState:
                 "split_counts": self.split_counts,
             },
             "output_file": str(self.output_file),
+            "dataset": {
+                "name": self.data_csv.stem,
+                "total_rows": len(self.rows),
+            },
             "scale": SCALE,
             "rows": [self._public_row(item) for item in self.assigned_rows],
             "responses": {
@@ -318,11 +326,18 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--host", default="127.0.0.1", help="Host to bind. Default: 127.0.0.1")
     parser.add_argument("--port", type=int, default=8000, help="Port to bind. Default: 8000")
-    parser.add_argument("--data-csv", type=Path, default=DEFAULT_DATA_CSV, help="Preference CSV path.")
+    parser.add_argument(
+        "--part",
+        type=int,
+        choices=(1, 2),
+        default=1,
+        help="Dataset part to annotate. Part 1 uses final.csv; part 2 uses final_part2.csv.",
+    )
+    parser.add_argument("--data-csv", type=Path, default=None, help="Override preference CSV path.")
     parser.add_argument(
         "--outdir",
         type=Path,
-        default=DEFAULT_RESULTS_DIR,
+        default=None,
         help="Directory for annotator JSON files.",
     )
     return parser.parse_args()
@@ -330,9 +345,12 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    state = AnnotationState(args.annotator_id, args.data_csv, args.outdir)
+    data_csv = args.data_csv or (DEFAULT_PART2_DATA_CSV if args.part == 2 else DEFAULT_DATA_CSV)
+    outdir = args.outdir or (DEFAULT_PART2_RESULTS_DIR if args.part == 2 else DEFAULT_RESULTS_DIR)
+    state = AnnotationState(args.annotator_id, data_csv, outdir)
     server = ThreadingHTTPServer((args.host, args.port), make_handler(state))
     url = f"http://{args.host}:{args.port}"
+    print(f"Dataset part {args.part}: {state.data_csv.name}")
     print(f"Annotator {args.annotator_id}: {len(state.assigned_rows)} of {len(state.rows)} rows")
     print(f"Results file: {state.output_file}")
     print(f"Open: {url}")

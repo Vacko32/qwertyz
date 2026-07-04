@@ -1,5 +1,6 @@
 const state = {
   annotatorId: null,
+  datasetName: "",
   rows: [],
   responses: {},
   currentIndex: 0,
@@ -38,7 +39,7 @@ const ratingLabels = {
 };
 
 function storageKey() {
-  return `preference-annotation-current-${state.annotatorId}`;
+  return `preference-annotation-current-${state.datasetName}-${state.annotatorId}`;
 }
 
 function currentRow() {
@@ -240,6 +241,7 @@ async function loadState() {
   }
   const data = await response.json();
   state.annotatorId = data.annotator_id;
+  state.datasetName = data.dataset?.name || "default";
   state.rows = data.rows;
   state.responses = data.responses || {};
   state.outputFile = data.output_file;
