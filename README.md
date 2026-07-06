@@ -65,10 +65,23 @@ The current blinded corpus has 138 rows:
 - Annotator 2 / Martin F: 46 rows
 - Annotator 3 / Vacko: 46 rows
 
-Part 2 has 191 rows:
+Part 2 has 270 rows:
 
-- Annotator 1 / David: 64 rows
-- Annotator 2 / Martin F: 64 rows
-- Annotator 3 / Vacko: 63 rows
+- Annotator 1 / David: 90 rows
+- Annotator 2 / Martin F: 90 rows
+- Annotator 3 / Vacko: 90 rows
+
+`final_part2_with_thinking.csv` contains the same part 2 rows plus 14 repaired
+part 1 thinking-token rows for relabeling:
+
+```bash
+uv run python server.py 1 --part 2 --data-csv final_part2_with_thinking.csv
+uv run python server.py 2 --part 2 --data-csv final_part2_with_thinking.csv
+uv run python server.py 3 --part 2 --data-csv final_part2_with_thinking.csv
+```
+
+- Annotator 1 / David: 95 rows
+- Annotator 2 / Martin F: 95 rows
+- Annotator 3 / Vacko: 94 rows
 
 The browser only shows `Response A` and `Response B`. The CSVs use anonymous slots only (`model_1`, `model_2`, etc.), and this repository does not include the private mapping from slots to real model names.
