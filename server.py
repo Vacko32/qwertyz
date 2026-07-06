@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 APP_DIR = Path(__file__).resolve().parent
 STATIC_DIR = APP_DIR / "static"
 DEFAULT_DATA_CSV = APP_DIR / "final.csv"
-DEFAULT_PART2_DATA_CSV = APP_DIR / "final_part2.csv"
+DEFAULT_PART2_DATA_CSV = APP_DIR / "final_second.csv"
 DEFAULT_RESULTS_DIR = APP_DIR / "results"
 DEFAULT_PART2_RESULTS_DIR = APP_DIR / "results_part2"
 
@@ -331,7 +331,7 @@ def parse_args() -> argparse.Namespace:
         type=int,
         choices=(1, 2),
         default=1,
-        help="Dataset part to annotate. Part 1 uses final.csv; part 2 uses final_part2.csv.",
+        help="Dataset part to annotate. Part 1 uses final.csv; part 2 uses final_second.csv.",
     )
     parser.add_argument("--data-csv", type=Path, default=None, help="Override preference CSV path.")
     parser.add_argument(

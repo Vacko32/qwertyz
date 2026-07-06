@@ -12,6 +12,14 @@ results_part2/
 *_preferences.json
 
 # Private/regeneration artifacts
+backups/
+cache/
+fasttext_gemba_benchmark/
+metric_results/
+preferences/
+evaluate_metrics.py
+prepare_think_aware_translations.py
+score_fasttext_gemba.py
 *.before_*.csv
 final_preference_corpus_dropped_rows.csv
 forced_drop_sample_ids.txt

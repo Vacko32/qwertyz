@@ -26,8 +26,9 @@ Use these assignments:
 
 ## Run Part 2
 
-Part 2 uses only the new preference rows from `final_part2.csv`. It keeps the
-same blinded UI and writes results to `results_part2/`, separate from the
+Part 2 uses `final_second.csv`. It contains the new preference rows plus the
+14 repaired thinking-token rows that must be relabeled from part 1. It keeps
+the same blinded UI and writes results to `results_part2/`, separate from the
 original annotation results.
 
 ```bash
@@ -65,20 +66,7 @@ The current blinded corpus has 138 rows:
 - Annotator 2 / Martin F: 46 rows
 - Annotator 3 / Vacko: 46 rows
 
-Part 2 has 270 rows:
-
-- Annotator 1 / David: 90 rows
-- Annotator 2 / Martin F: 90 rows
-- Annotator 3 / Vacko: 90 rows
-
-`final_part2_with_thinking.csv` contains the same part 2 rows plus 14 repaired
-part 1 thinking-token rows for relabeling:
-
-```bash
-uv run python server.py 1 --part 2 --data-csv final_part2_with_thinking.csv
-uv run python server.py 2 --part 2 --data-csv final_part2_with_thinking.csv
-uv run python server.py 3 --part 2 --data-csv final_part2_with_thinking.csv
-```
+Part 2 has 284 rows:
 
 - Annotator 1 / David: 95 rows
 - Annotator 2 / Martin F: 95 rows
